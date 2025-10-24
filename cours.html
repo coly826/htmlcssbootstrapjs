@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeLearn PRO - Coly Faye </title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    /* NOUVELLE PALETTE DE COULEURS */
+    :root {
+      --primary-dark: #1d1f21; /* Bleu Nuit / Presque Noir */
+      --accent-color: #ff8c00; /* Orange Énergique (Boutons, Accents) */
+      --secondary-bg: #272c34; /* Gris foncé pour le contenu */
+      --editor-bg: #1e1e1e; /* Fond de l'éditeur */
+      --content-bg: #f7f7f7; /* Fond du contenu principal */
+      --text-light: #c5c8c6; /* Gris clair pour le texte sombre */
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--content-bg);
+    }
+
+    /* Barre de Navigation (Bleu Nuit) */
+    .navbar {
+      background-color: var(--primary-dark);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .navbar-brand {
+      color: var(--accent-color) !important;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    /* Barre Latérale (Bleu Nuit) */
+    .sidebar {
+      background-color: var(--primary-dark);
+      height: 100vh;
+      color: white;
+      padding: 1rem 0;
+      position: fixed;
+      top: 56px;
+      left: 0;
+      width: 240px;
+      overflow-y: auto;
+      box-shadow: 4px 0 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .sidebar h5 {
+      color: var(--accent-color);
+      padding: 0 1.5rem;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      color: var(--text-light);
+      text-decoration: none;
+      margin: 0.2rem 1rem;
+      padding: 10px 15px;
+      border-radius: 6px;
+      transition: background-color 0.3s, color 0.3s;
+      font-weight: 500;
+    }
+
+    .sidebar a .bi {
+      margin-right: 12px;
+      font-size: 1.3rem; /* Icônes légèrement plus grandes */
+    }
+
+    /* État actif et hover améliorés (Orange subtil) */
+    .sidebar a:hover {
+      background-color: rgba(255, 140, 0, 0.2); /* Orange transparent */
+      color: white;
+    }
+    .sidebar a.active {
+      background-color: var(--accent-color);
+      color: var(--primary-dark) !important; /* Texte sombre sur fond actif */
+      font-weight: 700;
+      box-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+    }
+
+    .content {
+      margin-left: 260px;
+      padding: 2.5rem; /* Padding accru */
+    }
+
+    .section-header {
+      color: var(--primary-dark);
+      font-weight: 700;
+      border-bottom: 3px solid var(--accent-color);
+      padding-bottom: 8px;
+      font-size: 1.8rem;
+    }
+
+    /* Éditeur de code (Dark mode classique) */
+    .editor-area {
+      height: 350px; /* Encore plus d'espace */
+      width: 100%;
+      font-family: 'Consolas', monospace;
+      background-color: var(--editor-bg);
+      color: #f8f8f2;
+      border-radius: 8px;
+      padding: 20px;
+      resize: vertical;
+      border: 2px solid var(--secondary-bg);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Iframe de Résultat (Mise en avant) */
+    iframe {
+      width: 100%;
+      height: 400px; 
+      border: 4px solid var(--accent-color); /* Bordure orange forte */
+      border-radius: 8px;
+      background-color: white;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Boutons */
+    .btn-run {
+      background-color: var(--accent-color); /* Orange vif */
+      color: var(--primary-dark);
+      border: none;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .btn-run:hover {
+      background-color: #ffb45a; /* Orange plus clair au survol */
+      color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-clear {
+      background-color: #6c757d; /* Gris foncé professionnel */
+      color: white;
+      border: none;
+      font-weight: 600;
+    }
+    .btn-clear:hover {
+        background-color: #495057;
+    }
+
+    @media (max-width: 992px) {
+      .sidebar {
+        position: static;
+        height: auto;
+        width: 100%;
+        padding: 1rem;
+      }
+      .content {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><i class="bi bi-code-square"></i> CodeLearn <span class="badge bg-danger ms-2">PRO</span></a>
+    </div>
+  </nav>
+
+  <div class="sidebar">
+    <h5 class="text-center mb-4"><i class="bi bi-file-earmark-code"></i> Langages Web</h5>
+    <a href="#" id="link-html" onclick="loadExample('html', this)"><i class="bi bi-filetype-html"></i> HTML 5</a>
+    <a href="#" id="link-css" onclick="loadExample('css', this)"><i class="bi bi-palette-fill"></i> CSS 3</a>
+    <a href="#" id="link-bootstrap" onclick="loadExample('bootstrap', this)"><i class="bi bi-bootstrap-fill"></i> Bootstrap</a>
+    <a href="#" id="link-js" onclick="loadExample('js', this)"><i class="bi bi-lightning-fill"></i> JavaScript</a>
+  </div>
+
+  <div class="content"><br><br>
+    <h3 class="mb-5 section-header"><i class="bi bi-code-slash"></i> Espace de Développement</h3>
+
+    <label for="code" class="form-label fw-bold text-secondary">Entrer vos codes :</label>
+    <textarea id="code" class="editor-area" spellcheck="false" placeholder="// Commencez à taper votre code ici..."></textarea>
+
+    <div class="mt-4 mb-5">
+      <button class="btn btn-run btn-lg me-3 px-5" onclick="runCode()"><i class="bi bi-play-fill"></i> EXÉCUTER</button>
+      <button class="btn btn-clear btn-lg px-4" onclick="clearCode()"><i class="bi bi-x-circle-fill"></i> EFFACER</button>
+    </div>
+
+    <div class="mt-4">
+      <h5 class="section-header"><i class="bi bi-display"></i> Résultat en Temps Réel :</h5>
+      <iframe id="output" title="Résultat du code"></iframe>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const examples = {
+      html: `<!DOCTYPE html>
+<html>
+<body>
+  <header>
+    <h1>Titre HTML</h1>
+    <p>Structure de base de la page web.</p>
+  </header>
+</body>
+</html>`,
+
+      css: `<style>
+body { background-color: #282c34; color: white; padding: 20px; }
+h1 { color: #61afef; text-align: center; border-bottom: 2px solid #98c379; padding-bottom: 10px; }
+p { font-style: italic; font-size: 1.1rem; }
+</style>
+<h1>Style Modifié (Dracula/Atom)</h1>
+<p>Le CSS rend le contenu attrayant et unique.</p>`,
+
+      bootstrap: `<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<div class="container text-center py-5 bg-primary-subtle rounded-3 shadow">
+  <h2>Composants Bootstrap</h2>
+  <div class="alert alert-warning mt-4 fw-bold" role="alert">
+    Alerte! Utilisez les classes utilitaires de Bootstrap.
+  </div>
+  <button class="btn btn-danger btn-lg me-2"><i class="bi bi-heart-fill"></i> Rouge</button>
+  <button class="btn btn-info btn-lg"><i class="bi bi-cloud-fill"></i> Bleu</button>
+</div>`,
+
+      js: `<h3>Test JavaScript :</h3>
+<p id="resultat">Cliquez sur le bouton pour lancer l'action.</p>
+<button onclick="executerJS()" class="btn btn-success">Lancer JS</button>
+<script>
+function executerJS() {
+  document.getElementById('resultat').innerHTML = 'Le JavaScript est EXÉCUTÉ avec succès !';
+  document.getElementById('resultat').style.color = '#ff8c00'; // Utilisation de l'orange
+  document.getElementById('resultat').style.fontWeight = 'bold';
+}
+<\/script>`
+    };
+
+    function loadExample(type, element) {
+      document.getElementById("code").value = examples[type];
+      runCode();
+      
+      // Gestion de la classe 'active' pour le design
+      document.querySelectorAll('.sidebar a').forEach(link => {
+        link.classList.remove('active');
+      });
+      element.classList.add('active');
+    }
+
+    function runCode() {
+      const code = document.getElementById("code").value;
+      const iframe = document.getElementById("output");
+      // S'assurer que le HTML/CSS/JS est correctement encapsulé pour l'iframe
+      iframe.srcdoc = `<!DOCTYPE html><html><head><title>Résultat</title></head><body>${code}</body></html>`;
+    }
+
+    function clearCode() {
+      document.getElementById("code").value = '';
+      document.getElementById("output").srcdoc = '';
+      document.querySelectorAll('.sidebar a').forEach(link => {
+        link.classList.remove('active');
+      });
+    }
+
+    // Charger par défaut l'exemple HTML au démarrage et activer le lien
+    window.onload = () => {
+      const htmlLink = document.getElementById('link-html');
+      loadExample('html', htmlLink);
+    };
+  </script>
+</body>
+</html>
