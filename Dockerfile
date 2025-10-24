@@ -1,13 +1,11 @@
-# Utilise une image de base avec nginx
+# Utiliser une image de base légère de serveur web
 FROM nginx:alpine
 
-# Supprime la config nginx par défaut
-RUN rm -rf /usr/share/nginx/html/*
-
-# Copie ton site HTML/JS dans le dossier nginx
+# Copier les fichiers du projet dans le dossier du serveur Nginx
 COPY . /usr/share/nginx/html
 
-# Expose le port 80
+# Exposer le port 80
 EXPOSE 80
 
-# Le serveur nginx démarre automatiquement
+# Démarrer le serveur Nginx
+CMD ["nginx", "-g", "daemon off;"]
